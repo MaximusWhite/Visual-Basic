@@ -1,0 +1,10 @@
+An_Btn (timer)
+cmdOrd (button (0 - 8))
+Frame 1-3
+Label 1-4
+Lbl_Price (label (0 - 8))
+List1 (listbox)
+Ord_Fake (button)
+Ord_new (button)
+Quit (button)
+Timer 1-6
