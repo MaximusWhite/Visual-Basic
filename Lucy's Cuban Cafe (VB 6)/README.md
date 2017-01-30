@@ -9,4 +9,8 @@ so I put it into "Lucy's Cuban Cafe.txt"
 
 Download the .exe file and play with it all you want. 
 
+![alt text](cuban1.png "Main Menu")
+
 Hover over "prices" tag in order to open or close the price menu.
+
+![alt text](cuban2.png "Price Menu")
