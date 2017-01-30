@@ -1,4 +1,4 @@
-This is one of the programs I made for my grade 12 Computer Science course.
+This is one of the programs I made for my grade 12 Computer Science course (2013).
 
 The goal was to make a menu for ordering items in a cafe.
 After finishing the project I decided to play with the components of the form and made some cool animations with them because... 
