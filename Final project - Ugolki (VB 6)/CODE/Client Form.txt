@@ -1,0 +1,66 @@
+Option Explicit
+Public counter As Integer
+
+Private Sub BtnConnect_Click()
+    
+   Form1.Client.Close
+   
+   Form1.Client.Connect Text1.Text & "." & Text2.Text & "." & Text3.Text & "." & Text4.Text, 1111
+ 
+   BtnConnect.Enabled = False
+   
+End Sub
+
+Private Sub Form_Unload(Cancel As Integer)    ' closing the client window is considered as a change of mind, resulting in closing the connection
+Form1.Client.Close
+End Sub
+
+
+Private Sub Text1_KeyPress(KeyAscii As Integer)     ' when "." pressed, next window for IP-address is selected (to make input more comfortable)
+
+If KeyAscii = Asc(".") Then
+
+KeyAscii = 0
+
+Text2.SetFocus
+
+Text1.Text = Mid(Text1.Text, 1, Len(Text1.Text))
+
+End If
+
+
+End Sub
+
+
+Private Sub Text2_KeyPress(KeyAscii As Integer)
+
+If KeyAscii = Asc(".") Then
+
+KeyAscii = 0
+
+Text3.SetFocus
+
+Text2.Text = Mid(Text2.Text, 1, Len(Text2.Text))
+
+End If
+
+
+End Sub
+
+
+Private Sub Text3_KeyPress(KeyAscii As Integer)
+
+If KeyAscii = Asc(".") Then
+
+KeyAscii = 0
+
+Text4.SetFocus
+
+Text3.Text = Mid(Text3.Text, 1, Len(Text3.Text))
+
+End If
+
+
+End Sub
+
+

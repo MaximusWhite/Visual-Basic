@@ -1,0 +1,65 @@
+
+Private Sub Command1_Click()
+  
+    Call Form1.CreateField
+    Call Form1.CreatePieces
+    
+    
+  Form1.ApplicationState = "server"
+  
+  Randomize
+  
+  Dim i As Integer                     'firstly, server randomly calculates the color for itself
+  
+  i = Int((10 - 1 + 1) * Rnd() + 1)
+
+  If i <= 5 Then
+  
+    Form1.Player = "white"
+  
+  Else
+  
+    Form1.Player = "black"
+   
+     
+  End If
+
+
+
+  FormServer.Hide
+    
+  Call Form1.HideButtons
+
+If Form1.Player = "white" Then       ' then client gets a signal to start with the given color, opposite to what server calculated for itself
+
+Form1.Server.SendData "system|start|black"
+
+Form1.Label1.Caption = "Your move."
+
+Else
+
+Form1.Server.SendData "system|start|white"
+
+Form1.Label1.Caption = "Opponent's move."
+
+End If
+
+
+Command1.Enabled = False
+
+Status.Panels(1).Text = "Waiting for a client..."
+
+End Sub
+
+Private Sub Form_Load()
+
+Form1.Server.Listen
+
+Label1.Caption = "Your Ip-adress is: " + Form1.Server.LocalIP
+
+
+End Sub
+
+Private Sub Form_Unload(Cancel As Integer)
+Form1.Server.Close
+End Sub
