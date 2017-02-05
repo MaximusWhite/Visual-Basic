@@ -1,0 +1,168 @@
+VERSION 1.0 CLASS
+BEGIN
+  MultiUse = -1  'True
+  Persistable = 0  'NotPersistable
+  DataBindingBehavior = 0  'vbNone
+  DataSourceBehavior  = 0  'vbNone
+  MTSTransactionMode  = 0  'NotAnMTSObject
+END
+Attribute VB_Name = "TGamePiece"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = True
+Attribute VB_PredeclaredId = False
+Attribute VB_Exposed = False
+Option Explicit
+Public Color As String, WithEvents Piece As Image
+Attribute Piece.VB_VarHelpID = -1
+Public CurrentX As Integer, CurrentY As Integer, Selected As Boolean, Index As Integer
+
+Private Sub Class_Initialize()
+Selected = False
+End Sub
+
+
+Private Sub Piece_Click()
+
+Form1.Label7.Caption = Color + "   " & Index
+
+
+
+If (Form1.ApplicationState = "server") Or (Form1.ApplicationState = "client") Then
+  
+    If Form1.Player = Form1.NetPlayer Then
+
+       
+       
+       If (Selected = False) And (Form1.MakingMove = False) And (Form1.Player = Color) Then
+
+       Selected = True
+
+       Form1.MakingMove = True
+
+       Call Form1.SelectPiece(CurrentX, CurrentY)
+        
+       If Form1.ApplicationState = "server" Then Form1.Server.SendData "select|" & CurrentX & "|" & CurrentY & "|" & Color & "|" & Index
+        
+       If Form1.ApplicationState = "client" Then Form1.Client.SendData "select|" & CurrentX & "|" & CurrentY & "|" & Color & "|" & Index
+        
+       Form1.MovingX = CurrentX
+
+       Form1.MovingY = CurrentY
+
+       Form1.TempMovingX = CurrentX
+
+       Form1.TempMovingY = CurrentY
+       
+       
+       
+       
+       
+
+          If Color = "white" Then
+
+              Form1.MovingWhiteIndex = Index
+              Form1.WhiteMoves = True
+   
+              Form1.Label8.Caption = "white  index " & Form1.MovingWhiteIndex
+   
+   
+          Else
+
+              Form1.MovingBlackIndex = Index
+              Form1.WhiteMoves = False
+              Form1.Label8.Caption = "black  index " & Form1.MovingBlackIndex
+              
+              
+          End If
+
+       ElseIf (CurrentX = Form1.MovingX) And (CurrentY = Form1.MovingY) Then
+
+          Call Form1.RemoveSelection(CurrentX, CurrentY)
+          
+        If Form1.ApplicationState = "server" Then Form1.Server.SendData "unselect|" & CurrentX & "|" & CurrentY
+        
+        If Form1.ApplicationState = "client" Then Form1.Client.SendData "unselect|" & CurrentX & "|" & CurrentY
+
+          Selected = False
+
+          Form1.MakingMove = False
+
+       End If
+
+    
+    
+    
+    End If
+
+
+Else
+
+''''''''''''''''''''''''''''''''''''''''' single ''''''''''''''''''''''''''
+
+ If (Selected = False) And (Form1.MakingMove = False) And (Form1.Player = Color) Then
+
+       Selected = True
+
+       Form1.MakingMove = True
+
+       Call Form1.SelectPiece(CurrentX, CurrentY)
+
+       Form1.MovingX = CurrentX
+
+       Form1.MovingY = CurrentY
+
+       Form1.TempMovingX = CurrentX
+
+       Form1.TempMovingY = CurrentY
+
+
+          If Color = "white" Then
+
+              Form1.MovingWhiteIndex = Index
+              Form1.WhiteMoves = True
+   
+          Else
+
+              Form1.MovingBlackIndex = Index
+              Form1.WhiteMoves = False
+   
+          End If
+
+       ElseIf (CurrentX = Form1.MovingX) And (CurrentY = Form1.MovingY) Then
+
+          Call Form1.RemoveSelection(CurrentX, CurrentY)
+
+          Selected = False
+
+          Form1.MakingMove = False
+
+       End If
+
+
+
+
+
+End If
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+End Sub
